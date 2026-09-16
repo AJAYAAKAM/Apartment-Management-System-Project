@@ -396,3 +396,368 @@ body {
 .security-dashboard .notice-box {
   border-left: 4px solid #4f46e5;
 }
+
+/* =========================================
+   FLAT MANAGEMENT
+========================================= */
+
+.flat-management {
+  min-height: 100vh;
+  padding: 35px 40px;
+  background: #f5f7fb;
+}
+
+.flat-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.flat-page-header h1 {
+  color: #111827;
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.flat-page-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.add-flat-button {
+  border: none;
+  background: #4f46e5;
+  color: #ffffff;
+  padding: 13px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.add-flat-button:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+
+/* =========================================
+   ADD FLAT FORM
+========================================= */
+
+.flat-form-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  animation: flatFormSlide 0.3s ease;
+}
+
+.flat-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.flat-form-header h2 {
+  color: #111827;
+  font-size: 21px;
+  margin-bottom: 5px;
+}
+
+.flat-form-header p {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.close-form-button {
+  border: none;
+  background: #f3f4f6;
+  color: #4b5563;
+  width: 35px;
+  height: 35px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.close-form-button:hover {
+  background: #e5e7eb;
+}
+
+.flat-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.flat-form-group label {
+  display: block;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.flat-form-group input,
+.flat-form-group select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  outline: none;
+  font-size: 14px;
+  background: #ffffff;
+  color: #111827;
+  transition: 0.2s;
+}
+
+.flat-form-group input:focus,
+.flat-form-group select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
+}
+
+.flat-error {
+  margin-top: 18px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.flat-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.cancel-flat-button,
+.save-flat-button {
+  padding: 11px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-flat-button {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+}
+
+.cancel-flat-button:hover {
+  background: #f9fafb;
+}
+
+.save-flat-button {
+  border: none;
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.save-flat-button:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.save-flat-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   FLAT TABLE
+========================================= */
+
+.flat-table-container {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  overflow-x: auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.flat-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.flat-table th {
+  padding: 16px 18px;
+  text-align: left;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.flat-table td {
+  padding: 17px 18px;
+  color: #374151;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.flat-table tbody tr {
+  transition: 0.2s;
+}
+
+.flat-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.flat-table td strong {
+  color: #111827;
+}
+
+.no-flats {
+  text-align: center !important;
+  padding: 45px !important;
+  color: #9ca3af !important;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-badge.occupied {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.vacant {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.edit-button,
+.delete-button {
+  border: none;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 7px;
+  transition: 0.2s;
+}
+
+.edit-button {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.edit-button:hover {
+  background: #e0e7ff;
+}
+
+.delete-button {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.delete-button:hover {
+  background: #fee2e2;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.flat-loading {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 50px;
+  text-align: center;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes flatFormSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .flat-management {
+    padding: 25px 18px;
+  }
+
+  .flat-page-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .flat-page-header h1 {
+    font-size: 24px;
+  }
+
+  .flat-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .flat-form-card {
+    padding: 20px;
+  }
+
+  .flat-form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-flat-button,
+  .save-flat-button {
+    width: 100%;
+  }
+
+}

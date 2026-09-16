@@ -4,7 +4,10 @@ import API from "../services/api";
 function FlatManagement() {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [showForm, setShowForm] = useState(false);
+  const [editingFlat, setEditingFlat] = useState(null);
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -48,8 +51,42 @@ function FlatManagement() {
     });
   };
 
-  // Add new flat
-  const handleAddFlat = async (e) => {
+  // Open Add Form
+  const openAddForm = () => {
+    setEditingFlat(null);
+
+    setFormData({
+      flatNumber: "",
+      block: "",
+      floor: "",
+      ownerName: "",
+      ownerEmail: "",
+      status: "occupied",
+    });
+
+    setError("");
+    setShowForm(true);
+  };
+
+  // Open Edit Form
+  const openEditForm = (flat) => {
+    setEditingFlat(flat);
+
+    setFormData({
+      flatNumber: flat.flatNumber,
+      block: flat.block,
+      floor: flat.floor,
+      ownerName: flat.ownerName,
+      ownerEmail: flat.ownerEmail,
+      status: flat.status,
+    });
+
+    setError("");
+    setShowForm(true);
+  };
+
+  // Add / Update Flat
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -57,7 +94,7 @@ function FlatManagement() {
     if (
       !formData.flatNumber ||
       !formData.block ||
-      !formData.floor ||
+      formData.floor === "" ||
       !formData.ownerName ||
       !formData.ownerEmail
     ) {
@@ -70,18 +107,36 @@ function FlatManagement() {
 
       const token = localStorage.getItem("token");
 
-      await API.post(
-        "/flats",
-        {
-          ...formData,
-          floor: Number(formData.floor),
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      };
+
+      if (editingFlat) {
+        // Update existing flat
+        await API.put(
+          `/flats/${editingFlat._id}`,
+          {
+            ...formData,
+            floor: Number(formData.floor),
           },
-        }
-      );
+          config
+        );
+      } else {
+        // Add new flat
+        await API.post(
+          "/flats",
+          {
+            ...formData,
+            floor: Number(formData.floor),
+          },
+          config
+        );
+      }
+
+      setShowForm(false);
+      setEditingFlat(null);
 
       setFormData({
         flatNumber: "",
@@ -92,17 +147,46 @@ function FlatManagement() {
         status: "occupied",
       });
 
-      setShowForm(false);
-
       await fetchFlats();
 
     } catch (error) {
       setError(
         error.response?.data?.message ||
-        "Failed to add flat."
+        "Something went wrong."
       );
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Delete Flat
+  const handleDelete = async (flatId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this flat?"
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.delete(`/flats/${flatId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await fetchFlats();
+
+    } catch (error) {
+      console.log("Delete Flat Error:", error);
+
+      setError(
+        error.response?.data?.message ||
+        "Failed to delete flat."
+      );
     }
   };
 
@@ -122,10 +206,7 @@ function FlatManagement() {
 
         <button
           className="add-flat-button"
-          onClick={() => {
-            setShowForm(true);
-            setError("");
-          }}
+          onClick={openAddForm}
         >
           + Add Flat
         </button>
@@ -133,23 +214,32 @@ function FlatManagement() {
       </div>
 
 
-      {/* Add Flat Form */}
+      {/* Add / Edit Form */}
       {showForm && (
         <div className="flat-form-card">
 
           <div className="flat-form-header">
 
             <div>
-              <h2>Add New Flat</h2>
+              <h2>
+                {editingFlat
+                  ? "Edit Flat"
+                  : "Add New Flat"}
+              </h2>
 
               <p>
-                Enter the flat and owner details.
+                {editingFlat
+                  ? "Update flat and owner details."
+                  : "Enter the flat and owner details."}
               </p>
             </div>
 
             <button
               className="close-form-button"
-              onClick={() => setShowForm(false)}
+              onClick={() => {
+                setShowForm(false);
+                setEditingFlat(null);
+              }}
             >
               ✕
             </button>
@@ -157,7 +247,7 @@ function FlatManagement() {
           </div>
 
 
-          <form onSubmit={handleAddFlat}>
+          <form onSubmit={handleSubmit}>
 
             <div className="flat-form-grid">
 
@@ -271,7 +361,10 @@ function FlatManagement() {
               <button
                 type="button"
                 className="cancel-flat-button"
-                onClick={() => setShowForm(false)}
+                onClick={() => {
+                  setShowForm(false);
+                  setEditingFlat(null);
+                }}
               >
                 Cancel
               </button>
@@ -281,7 +374,11 @@ function FlatManagement() {
                 className="save-flat-button"
                 disabled={saving}
               >
-                {saving ? "Adding..." : "Add Flat"}
+                {saving
+                  ? "Saving..."
+                  : editingFlat
+                  ? "Update Flat"
+                  : "Add Flat"}
               </button>
 
             </div>
@@ -375,11 +472,17 @@ function FlatManagement() {
 
                     <td>
 
-                      <button className="edit-button">
+                      <button
+                        className="edit-button"
+                        onClick={() => openEditForm(flat)}
+                      >
                         Edit
                       </button>
 
-                      <button className="delete-button">
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDelete(flat._id)}
+                      >
                         Delete
                       </button>
 

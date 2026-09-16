@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ResidentDashboard() {
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -15,7 +18,6 @@ function ResidentDashboard() {
     <div className="resident-dashboard">
 
       <header className="dashboard-header">
-
         <div>
           <h1>Resident Dashboard</h1>
 
@@ -34,7 +36,6 @@ function ResidentDashboard() {
             <span>Resident</span>
           </div>
         </div>
-
       </header>
 
       <main className="dashboard-content">
@@ -53,10 +54,16 @@ function ResidentDashboard() {
             <p>View maintenance bills</p>
           </div>
 
-          <div className="dashboard-card">
+          <div
+            className="dashboard-card"
+            onClick={() =>
+              navigate("/resident/complaints/add")
+            }
+            style={{ cursor: "pointer" }}
+          >
             <span>📝</span>
             <h3>Complaints</h3>
-            <p>Manage your complaints</p>
+            <p>Submit and manage your complaints</p>
           </div>
 
           <div className="dashboard-card">
@@ -72,7 +79,10 @@ function ResidentDashboard() {
           <h2>Recent Notices</h2>
 
           <div className="notice-box">
-            <h3>Welcome to Apartment Management System</h3>
+            <h3>
+              Welcome to Apartment Management System
+            </h3>
+
             <p>
               Important apartment notices will appear here.
             </p>

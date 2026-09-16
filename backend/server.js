@@ -9,14 +9,23 @@ const connectDB = require("./config/db");
 const User = require("./models/user");
 const authRoutes = require("./routes/authRoutes");
 const flatRoutes = require("./routes/flatRoutes");
+const residentRoutes = require("./routes/residentRoutes");
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
+const complaintRoutes = require("./routes/complaintRoutes");
+const visitorRoutes = require("./routes/visitorRoutes");
+const parkingRoutes = require("./routes/parkingRoutes");
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api/maintenance", maintenanceRoutes);
+app.use("/api/residents", residentRoutes);
 app.use("/api/flats", flatRoutes);
 app.use("/api/auth", authRoutes);
-
+app.use("/api/complaints", complaintRoutes);
+app.use("/api/visitors", visitorRoutes);
+app.use("/api/parking", parkingRoutes);
 // Health route for quick startup verification
 app.get("/health", (req, res) => {
   const dbState = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
