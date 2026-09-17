@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
+
 import ResidentDashboard from "./pages/ResidentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
@@ -15,30 +16,32 @@ import AddComplaint from "./pages/AddComplaint";
 import VisitorManagement from "./pages/VisitorManagement";
 import ParkingManagement from "./pages/ParkingManagement";
 
+import NoticeManagement from "./pages/NoticeManagement";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* HOME */}
+        {/* Home */}
         <Route
           path="/"
           element={<h1>Apartment Management System</h1>}
         />
 
-        {/* LOGIN */}
+        {/* Authentication */}
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* REGISTER */}
         <Route
           path="/register"
           element={<h1>Register Page</h1>}
         />
 
-        {/* ADMIN */}
+        {/* ================= ADMIN ================= */}
+
         <Route
           path="/admin"
           element={<AdminDashboard />}
@@ -68,24 +71,22 @@ function App() {
           path="/admin/visitors"
           element={<VisitorManagement />}
         />
+
         <Route
           path="/admin/parking"
           element={<ParkingManagement />}
         />
 
-        {/* RESIDENT */}
+        <Route
+          path="/admin/notices"
+          element={<NoticeManagement />}
+        />
+
+        {/* ================= RESIDENT ================= */}
+
         <Route
           path="/resident"
           element={<ResidentDashboard />}
-        />
-
-        <Route
-          path="/resident/visitors"
-          element={<VisitorManagement />}
-        />
-        <Route
-          path="/resident/parking"
-          element={<ParkingManagement />}
         />
 
         <Route
@@ -93,7 +94,23 @@ function App() {
           element={<AddComplaint />}
         />
 
-        {/* SECURITY */}
+        <Route
+          path="/resident/visitors"
+          element={<VisitorManagement />}
+        />
+
+        <Route
+          path="/resident/parking"
+          element={<ParkingManagement />}
+        />
+
+        <Route
+          path="/resident/notices"
+          element={<NoticeManagement />}
+        />
+
+        {/* ================= SECURITY ================= */}
+
         <Route
           path="/security"
           element={<SecurityDashboard />}
@@ -103,9 +120,15 @@ function App() {
           path="/security/visitors"
           element={<VisitorManagement />}
         />
+
         <Route
           path="/security/parking"
           element={<ParkingManagement />}
+        />
+
+        <Route
+          path="/security/notices"
+          element={<NoticeManagement />}
         />
 
       </Routes>
