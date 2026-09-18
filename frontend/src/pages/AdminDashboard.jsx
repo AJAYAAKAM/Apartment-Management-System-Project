@@ -6,85 +6,164 @@ const AdminDashboard = () => {
   return (
     <div className="dashboard-page">
 
+      {/* Header */}
       <div className="dashboard-header">
+
         <div>
           <h1>Admin Dashboard</h1>
-          <p>Manage your apartment from one place.</p>
+
+          <p>
+            Manage your apartment from one place.
+          </p>
         </div>
 
         <div className="admin-profile">
+
           <span>👤</span>
+
           <div>
             <strong>Admin</strong>
             <small>Administrator</small>
           </div>
+
         </div>
+
       </div>
 
+
+      {/* Dashboard Cards */}
       <div className="dashboard-grid">
 
+        {/* Residents */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/admin/residents")}
         >
           <span>👥</span>
+
           <h3>Residents</h3>
-          <p>Manage apartment residents</p>
+
+          <p>
+            Manage apartment residents
+          </p>
         </div>
 
+
+        {/* Flats */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/admin/flats")}
         >
           <span>🏠</span>
+
           <h3>Flats</h3>
-          <p>Manage apartment flats</p>
+
+          <p>
+            Manage apartment flats
+          </p>
         </div>
 
+
+        {/* Maintenance */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/admin/maintenance")}
         >
           <span>💰</span>
+
           <h3>Maintenance</h3>
-          <p>Manage maintenance payments</p>
+
+          <p>
+            Manage maintenance payments
+          </p>
         </div>
 
+
+        {/* Complaints */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/admin/complaints")}
         >
           <span>📢</span>
+
           <h3>Complaints</h3>
-          <p>Manage resident complaints</p>
+
+          <p>
+            Manage resident complaints
+          </p>
         </div>
 
-        <div className="dashboard-card">
+
+        {/* Visitors */}
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/visitors")}
+        >
+          <span>👥</span>
+
+          <h3>Visitors</h3>
+
+          <p>
+            Manage apartment visitors
+          </p>
+        </div>
+
+
+        {/* Parking */}
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/parking")}
+        >
           <span>🚗</span>
+
           <h3>Parking</h3>
-          <p>Manage parking spaces</p>
+
+          <p>
+            Manage parking spaces
+          </p>
         </div>
 
-        <div className="dashboard-card">
+
+        {/* Notices */}
+        <div
+          className="dashboard-card"
+          onClick={() => navigate("/admin/notices")}
+        >
           <span>📋</span>
+
           <h3>Notices</h3>
-          <p>Manage apartment notices</p>
+
+          <p>
+            Manage apartment notices
+          </p>
         </div>
 
       </div>
 
+
+      {/* Overview */}
       <div className="dashboard-overview">
+
         <div className="overview-card">
+
           <span>🏢</span>
 
           <div>
-            <h3>Apartment Management</h3>
+
+            <h3>
+              Apartment Management
+            </h3>
+
             <p>
               Manage residents, flats, maintenance,
-              complaints, parking and notices efficiently.
+              complaints, visitors, parking and notices
+              efficiently.
             </p>
+
           </div>
+
         </div>
+
       </div>
 
     </div>

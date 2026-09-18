@@ -15,6 +15,8 @@ const complaintRoutes = require("./routes/complaintRoutes");
 const visitorRoutes = require("./routes/visitorRoutes");
 const parkingRoutes = require("./routes/parkingRoutes");
 const noticeRoutes = require("./routes/noticeRoutes");
+const reportsRoutes = require("./routes/ReportRoutes");
+
 const app = express();
 
 // Middleware
@@ -28,6 +30,8 @@ app.use("/api/complaints", complaintRoutes);
 app.use("/api/visitors", visitorRoutes);
 app.use("/api/parking", parkingRoutes);
 app.use("/api/notices", noticeRoutes);
+app.use("/api/reports", reportsRoutes);
+
 // Health route for quick startup verification
 app.get("/health", (req, res) => {
   const dbState = mongoose.connection.readyState === 1 ? "connected" : "disconnected";

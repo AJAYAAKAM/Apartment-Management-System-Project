@@ -1,21 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import ResidentDashboard from "./pages/ResidentDashboard";
+import ResidentMaintenance from "./pages/ResidentMaintenance";
+import ResidentFlat from "./pages/ResidentFlat";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import SecurityDashboard from "./pages/SecurityDashboard";
 
 import FlatManagement from "./pages/FlatManagement";
 import ResidentManagement from "./pages/ResidentManagement";
 import MaintenanceManagement from "./pages/MaintenanceManagement";
-
 import ComplaintManagement from "./pages/ComplaintManagement";
 import AddComplaint from "./pages/AddComplaint";
-
 import VisitorManagement from "./pages/VisitorManagement";
 import ParkingManagement from "./pages/ParkingManagement";
-
 import NoticeManagement from "./pages/NoticeManagement";
 
 function App() {
@@ -30,17 +31,10 @@ function App() {
         />
 
         {/* Authentication */}
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/register"
-          element={<h1>Register Page</h1>}
-        />
-
-        {/* ================= ADMIN ================= */}
+        {/* ================= ADMIN ROUTES ================= */}
 
         <Route
           path="/admin"
@@ -82,11 +76,21 @@ function App() {
           element={<NoticeManagement />}
         />
 
-        {/* ================= RESIDENT ================= */}
+        {/* ================= RESIDENT ROUTES ================= */}
 
         <Route
           path="/resident"
           element={<ResidentDashboard />}
+        />
+
+        <Route
+          path="/resident/flat"
+          element={<ResidentFlat />}
+        />
+
+        <Route
+          path="/resident/maintenance"
+          element={<ResidentMaintenance />}
         />
 
         <Route
@@ -109,7 +113,7 @@ function App() {
           element={<NoticeManagement />}
         />
 
-        {/* ================= SECURITY ================= */}
+        {/* ================= SECURITY ROUTES ================= */}
 
         <Route
           path="/security"

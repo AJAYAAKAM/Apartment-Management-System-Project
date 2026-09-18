@@ -42,23 +42,32 @@ function ResidentDashboard() {
 
         <section className="dashboard-cards">
 
-          <div className="dashboard-card">
+          {/* My Flat */}
+          <div
+            className="dashboard-card"
+            onClick={() => navigate("/resident/flat")}
+            style={{ cursor: "pointer" }}
+          >
             <span>🏠</span>
             <h3>My Flat</h3>
             <p>Flat information</p>
           </div>
 
-          <div className="dashboard-card">
+          {/* Maintenance */}
+          <div
+            className="dashboard-card"
+            onClick={() => navigate("/resident/maintenance")}
+            style={{ cursor: "pointer" }}
+          >
             <span>💰</span>
             <h3>Maintenance</h3>
             <p>View maintenance bills</p>
           </div>
 
+          {/* Complaints */}
           <div
             className="dashboard-card"
-            onClick={() =>
-              navigate("/resident/complaints/add")
-            }
+            onClick={() => navigate("/resident/complaints/add")}
             style={{ cursor: "pointer" }}
           >
             <span>📝</span>
@@ -66,7 +75,12 @@ function ResidentDashboard() {
             <p>Submit and manage your complaints</p>
           </div>
 
-          <div className="dashboard-card">
+          {/* Visitors */}
+          <div
+            className="dashboard-card"
+            onClick={() => navigate("/resident/visitors")}
+            style={{ cursor: "pointer" }}
+          >
             <span>👥</span>
             <h3>Visitors</h3>
             <p>View visitor records</p>
