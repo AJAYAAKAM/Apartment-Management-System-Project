@@ -30,7 +30,10 @@ function Login() {
       });
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.user)
+      );
 
       const role = response.data.user.role;
 
@@ -40,12 +43,16 @@ function Login() {
         navigate("/resident");
       } else if (role === "security") {
         navigate("/security");
+      } else {
+        setError("Invalid user role");
       }
 
     } catch (error) {
+      console.error("Login Error:", error);
+
       setError(
         error.response?.data?.message ||
-        "Login failed. Please try again."
+          "Login failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -65,7 +72,9 @@ function Login() {
 
           <h1>Apartment Management</h1>
 
-          <p>Welcome back! Please login to your account.</p>
+          <p>
+            Welcome back! Please login to your account.
+          </p>
 
         </div>
 
@@ -94,12 +103,16 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
               />
 
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
               >
                 {showPassword ? "Hide" : "Show"}
               </button>

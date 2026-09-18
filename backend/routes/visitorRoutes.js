@@ -3,6 +3,7 @@ const express = require("express");
 const {
   addVisitor,
   getVisitors,
+  markVisitorExit,
 } = require("../controllers/visitorController");
 
 const protect = require("../middleware/authMiddleware");
@@ -10,7 +11,11 @@ const allowRoles = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
-// Add Visitor
+
+// =========================================================
+// ADD VISITOR
+// =========================================================
+
 router.post(
   "/",
   protect,
@@ -18,12 +23,29 @@ router.post(
   addVisitor
 );
 
-// Get All Visitors
+
+// =========================================================
+// GET ALL VISITORS
+// =========================================================
+
 router.get(
   "/",
   protect,
   allowRoles("admin", "security", "resident"),
   getVisitors
 );
+
+
+// =========================================================
+// MARK VISITOR EXIT
+// =========================================================
+
+router.put(
+  "/:id/exit",
+  protect,
+  allowRoles("security"),
+  markVisitorExit
+);
+
 
 module.exports = router;

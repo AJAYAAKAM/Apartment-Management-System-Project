@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    navigate("/login");
+  };
+
   return (
     <div className="dashboard-page">
 
@@ -24,6 +31,23 @@ const AdminDashboard = () => {
           <div>
             <strong>Admin</strong>
             <small>Administrator</small>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              style={{
+                marginTop: "10px",
+                background: "#dc2626",
+                color: "white",
+                border: "none",
+                padding: "8px 16px",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "600"
+              }}
+            >
+              Logout
+            </button>
           </div>
 
         </div>

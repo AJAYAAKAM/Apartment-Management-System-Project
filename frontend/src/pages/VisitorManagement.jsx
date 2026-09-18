@@ -5,6 +5,16 @@ function VisitorManagement() {
   const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [showForm, setShowForm] = useState(false);
+
+  const [formData, setFormData] = useState({
+    visitorName: "",
+    phone: "",
+    flatNumber: "",
+    purpose: "",
+  });
 
   const fetchVisitors = async () => {
     try {
@@ -36,10 +46,87 @@ function VisitorManagement() {
     fetchVisitors();
   }, []);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAddVisitor = async (e) => {
+    e.preventDefault();
+
+    try {
+      setError("");
+      setMessage("");
+
+      const token = localStorage.getItem("token");
+
+      await API.post("/visitors", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setMessage("Visitor entry added successfully.");
+
+      setFormData({
+        visitorName: "",
+        phone: "",
+        flatNumber: "",
+        purpose: "",
+      });
+
+      setShowForm(false);
+
+      fetchVisitors();
+    } catch (error) {
+      console.log("Add Visitor Error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to add visitor"
+      );
+    }
+  };
+
+  const handleMarkExit = async (visitorId) => {
+    try {
+      setError("");
+      setMessage("");
+
+      const token = localStorage.getItem("token");
+
+      await API.put(
+        `/visitors/${visitorId}/exit`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setMessage("Visitor exit marked successfully.");
+
+      fetchVisitors();
+    } catch (error) {
+      console.log("Mark Exit Error:", error);
+
+      setError(
+        error.response?.data?.message ||
+          "Failed to mark visitor exit"
+      );
+    }
+  };
+
   return (
     <div className="management-page">
 
+      {/* ================= HEADER ================= */}
+
       <div className="page-header">
+
         <div>
           <h1>Visitor Management</h1>
 
@@ -49,18 +136,44 @@ function VisitorManagement() {
         </div>
 
         <div className="summary-card">
+
           <span>👥</span>
 
           <div>
             <strong>{visitors.length}</strong>
             <small>Total Visitors</small>
           </div>
+
         </div>
+
       </div>
 
-      {loading && (
-        <div className="loading-message">
-          Loading visitors...
+
+      {/* ================= ADD BUTTON ================= */}
+
+      <div className="visitor-action-bar">
+
+        <button
+          type="button"
+          onClick={() => {
+            setShowForm(!showForm);
+            setMessage("");
+            setError("");
+          }}
+        >
+          {showForm
+            ? "✕ Close Form"
+            : "➕ Add Visitor"}
+        </button>
+
+      </div>
+
+
+      {/* ================= MESSAGES ================= */}
+
+      {message && (
+        <div className="success-message">
+          {message}
         </div>
       )}
 
@@ -70,74 +183,227 @@ function VisitorManagement() {
         </div>
       )}
 
-      {!loading && !error && visitors.length === 0 && (
-        <div className="empty-message">
-          No visitors found.
+
+      {/* ================= ADD VISITOR FORM ================= */}
+
+      {showForm && (
+        <div className="form-container">
+
+          <h2>
+            Add Visitor Entry
+          </h2>
+
+          <form onSubmit={handleAddVisitor}>
+
+            <div className="form-group">
+
+              <label>
+                Visitor Name
+              </label>
+
+              <input
+                type="text"
+                name="visitorName"
+                value={formData.visitorName}
+                onChange={handleChange}
+                placeholder="Enter visitor name"
+                required
+              />
+
+            </div>
+
+
+            <div className="form-group">
+
+              <label>
+                Phone Number
+              </label>
+
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter phone number"
+                required
+              />
+
+            </div>
+
+
+            <div className="form-group">
+
+              <label>
+                Flat Number
+              </label>
+
+              <input
+                type="text"
+                name="flatNumber"
+                value={formData.flatNumber}
+                onChange={handleChange}
+                placeholder="Example: A-101"
+                required
+              />
+
+            </div>
+
+
+            <div className="form-group">
+
+              <label>
+                Purpose of Visit
+              </label>
+
+              <input
+                type="text"
+                name="purpose"
+                value={formData.purpose}
+                onChange={handleChange}
+                placeholder="Example: Meeting resident"
+                required
+              />
+
+            </div>
+
+
+            <button type="submit">
+              Add Visitor Entry
+            </button>
+
+          </form>
+
         </div>
       )}
 
-      {!loading && !error && visitors.length > 0 && (
-        <div className="table-container">
 
-          <table className="management-table">
+      {/* ================= LOADING ================= */}
 
-            <thead>
-              <tr>
-                <th>Visitor</th>
-                <th>Phone</th>
-                <th>Flat</th>
-                <th>Purpose</th>
-                <th>Entry Time</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+      {loading && (
+        <div className="loading-message">
+          Loading visitors...
+        </div>
+      )}
 
-            <tbody>
 
-              {visitors.map((visitor) => (
-                <tr key={visitor._id}>
+      {/* ================= EMPTY ================= */}
 
-                  <td>
-                    <strong>
-                      {visitor.visitorName}
-                    </strong>
-                  </td>
+      {!loading &&
+        !error &&
+        visitors.length === 0 && (
+          <div className="empty-message">
+            No visitors found.
+          </div>
+        )}
 
-                  <td>
-                    {visitor.phone}
-                  </td>
 
-                  <td>
-                    {visitor.flatNumber}
-                  </td>
+      {/* ================= VISITOR TABLE ================= */}
 
-                  <td>
-                    {visitor.purpose}
-                  </td>
+      {!loading &&
+        !error &&
+        visitors.length > 0 && (
 
-                  <td>
-                    {new Date(
-                      visitor.entryTime
-                    ).toLocaleString()}
-                  </td>
+          <div className="table-container">
 
-                  <td>
-                    <span
-                      className={`status-badge ${visitor.status}`}
-                    >
-                      {visitor.status}
-                    </span>
-                  </td>
+            <table className="management-table">
 
+              <thead>
+
+                <tr>
+                  <th>Visitor</th>
+                  <th>Phone</th>
+                  <th>Flat</th>
+                  <th>Purpose</th>
+                  <th>Entry Time</th>
+                  <th>Exit Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              ))}
 
-            </tbody>
+              </thead>
 
-          </table>
+              <tbody>
 
-        </div>
-      )}
+                {visitors.map((visitor) => (
+
+                  <tr key={visitor._id}>
+
+                    <td>
+                      <strong>
+                        {visitor.visitorName}
+                      </strong>
+                    </td>
+
+                    <td>
+                      {visitor.phone}
+                    </td>
+
+                    <td>
+                      {visitor.flatNumber}
+                    </td>
+
+                    <td>
+                      {visitor.purpose}
+                    </td>
+
+                    <td>
+                      {new Date(
+                        visitor.entryTime
+                      ).toLocaleString()}
+                    </td>
+
+                    <td>
+                      {visitor.exitTime
+                        ? new Date(
+                            visitor.exitTime
+                          ).toLocaleString()
+                        : "-"}
+                    </td>
+
+                    <td>
+
+                      <span
+                        className={`status-badge ${visitor.status}`}
+                      >
+                        {visitor.status}
+                      </span>
+
+                    </td>
+
+                    <td>
+
+                      {visitor.status === "inside" ? (
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleMarkExit(visitor._id)
+                          }
+                        >
+                          🚪 Mark Exit
+                        </button>
+
+                      ) : (
+
+                        <span>
+                          ✓ Exited
+                        </span>
+
+                      )}
+
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        )}
 
     </div>
   );
