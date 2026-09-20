@@ -6,7 +6,7 @@ require("dotenv").config({ override: true });
 require("dns").setDefaultResultOrder("ipv4first");
 
 const connectDB = require("./config/db");
-const User = require("./models/user");
+
 const authRoutes = require("./routes/authRoutes");
 const flatRoutes = require("./routes/flatRoutes");
 const residentRoutes = require("./routes/residentRoutes");
@@ -22,6 +22,8 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// API Routes
 app.use("/api/maintenance", maintenanceRoutes);
 app.use("/api/residents", residentRoutes);
 app.use("/api/flats", flatRoutes);
@@ -32,9 +34,12 @@ app.use("/api/parking", parkingRoutes);
 app.use("/api/notices", noticeRoutes);
 app.use("/api/reports", reportsRoutes);
 
-// Health route for quick startup verification
+// Health Route
 app.get("/health", (req, res) => {
-  const dbState = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+  const dbState =
+    mongoose.connection.readyState === 1
+      ? "connected"
+      : "disconnected";
 
   res.json({
     status: "ok",
@@ -43,49 +48,9 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Home route
+// Home Route
 app.get("/", (req, res) => {
   res.send("Apartment Management System Backend is Running!");
-});
-
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find().select("-password");
-
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({
-      message: "Failed to fetch users"
-    });
-  }
-});
-
-// Temporary test user route
-app.get("/test-user", async (req, res) => {
-  if (mongoose.connection.readyState !== 1) {
-    return res.status(503).json({
-      message: "Database is not connected. Start MongoDB or whitelist your IP in Atlas.",
-    });
-  }
-
-  try {
-    const user = await User.create({
-      name: "Ajay",
-      email: "ajay@gmail.com",
-      password: "123456",
-      role: "resident",
-    });
-
-    res.json({
-      message: "User created successfully",
-      user,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "User creation failed",
-      error: error.message,
-    });
-  }
 });
 
 // Port
