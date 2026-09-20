@@ -682,3 +682,23 @@ Deployment            🔄
 ```
 
 **Apartment Management System — MERN Stack Full-Stack Project**
+
+🌐 **Website:**  
+https://apartment-management-system-project coral.vercel.app/login
+
+---
+
+## 🔐 Demo Login Credentials
+
+Use the following demo accounts to explore the application.
+
+| Role | Email | Password |
+|------|-------|----------|
+| 👨‍💼 Admin | `admin12@gmail.com` | `admin123` |
+| 🏠 Resident | `resident12@gmail.com` | `resident123` |
+| 🛡️ Security / Watchman | `security123@gmail.com` | `security123` |
+
+> These credentials are provided for demonstration and project evaluation purposes.
+
+---
+
