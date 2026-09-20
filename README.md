@@ -1,7 +1,7 @@
 # 🏢 Apartment Management System
 
 🌐 **Website:**  
-https://apartment-management-system-projectcoral.vercel.app/login
+https://apartment-management-system-project-coral.vercel.app/login
 
 A full-stack **Apartment Management System** developed using the **MERN Stack** to digitally manage apartment residents, flats, maintenance, complaints, visitors, parking, notices, and reports.
 
