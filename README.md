@@ -15,7 +15,7 @@ The Apartment Management System is designed to simplify day-to-day apartment man
 
 The application allows administrators to manage apartment-related information, residents to access their apartment services, and security personnel to manage visitor and parking activities.
 
----
+----
 
 ## 🎯 Project Objectives
 
