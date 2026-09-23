@@ -81,7 +81,7 @@ Security users can:
 
 # 🛠️ Technologies Used
 
-## Frontend
+### Frontend
 
 * React.js
 * Vite
