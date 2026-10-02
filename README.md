@@ -79,7 +79,7 @@ Security users can:
 
 ---
 
-# 🛠️ Technologies Used
+## 🛠️ Technologies Used
 
 ### Frontend
 
